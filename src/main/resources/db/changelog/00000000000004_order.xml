@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="00000000000004-order-seq" author="BohdanMoldavets">
+        <createSequence sequenceName="order-sequence" startValue="1" incrementBy="1"/>
+    </changeSet>
+    
+    <changeSet id="00000000000003-order" author="BohdanMoldavets">
+        <createTable tableName="order">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="public_id" type="${uuidType}">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="status" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_customer" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stripe_session_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="order" baseColumnNames="fk_customer"
+                                 referencedTableName="ecommerce_user" referencedColumnNames="id"
+                                 constraintName="fk_user_order_id"
+        />
+    </changeSet>
+
+    <changeSet id="00000000000004-order-product" author="BohdanMoldavets">
+        <createTable tableName="order_product">
+            <column name="fk_order" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_product" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="float">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="order_product" baseColumnNames="fk_product"
+                                 referencedTableName="product" referencedColumnNames="public_id"
+                                 constraintName="fk_ordered_product_constraint"
+        />
+
+        <addForeignKeyConstraint baseTableName="order_product" baseColumnNames="fk_order"
+                                 referencedTableName="order" referencedColumnNames="id"
+                                 constraintName="fk_ordered_order_constraint"
+        />
+    </changeSet>
+    
+</databaseChangeLog>
