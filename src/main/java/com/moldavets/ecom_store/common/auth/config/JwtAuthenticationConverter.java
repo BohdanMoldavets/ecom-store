@@ -20,7 +20,7 @@ public class JwtAuthenticationConverter implements Converter<Jwt, AbstractAuthen
     }
 
     private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
-        return AuthenticatedUSer.extractRolesFormToken(jwt).stream()
+        return AuthenticatedUser.extractRolesFormToken(jwt).stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
     }
