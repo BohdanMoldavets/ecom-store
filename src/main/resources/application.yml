@@ -49,5 +49,11 @@ spring:
 
 server:
   port: 8080
-
-
+application:
+  cors:
+    allowed-origins: http://localhost:8080
+    allowed-methods: "*"
+    allowed-headers: "*"
+    exposed-headers: "*"
+    allowed-credentionals: false
+    max-age: 300
