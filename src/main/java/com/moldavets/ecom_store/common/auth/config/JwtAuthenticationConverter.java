@@ -1,5 +1,6 @@
 package com.moldavets.ecom_store.common.auth.config;
 
+import com.moldavets.ecom_store.common.auth.service.AuthenticatedUser;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +21,7 @@ public class JwtAuthenticationConverter implements Converter<Jwt, AbstractAuthen
     }
 
     private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
-        return AuthenticatedUser.extractRolesFormToken(jwt).stream()
+        return AuthenticatedUser.extractRolesFromToken(jwt).stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
     }

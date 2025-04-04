@@ -20,5 +20,4 @@ public record Username(String username) {
                 .filter(s -> !s.isEmpty())
                 .map(Username::new);
     }
-
 }
