@@ -55,5 +55,5 @@ application:
     allowed-methods: "*"
     allowed-headers: "*"
     exposed-headers: "*"
-    allowed-credentionals: false
+    allow-credentials: false
     max-age: 300
