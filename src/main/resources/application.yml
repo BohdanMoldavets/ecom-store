@@ -41,6 +41,14 @@ spring:
     change-log: db/changelog/master.xml
     contexts: dev
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://moldavets.kinde.com
+          jwk-set-uri: https://moldavets.kinde.com/.well-known/jwks
+          audiences: http://localhost:8080/api
+
   servlet:
     multipart:
       enabled: true
@@ -57,3 +65,9 @@ application:
     exposed-headers: "*"
     allow-credentials: false
     max-age: 300
+
+  kinde:
+    api: https://moldavets.kinde.com
+    client-id: ${KINDE_CLIENT_ID}
+    client-secret: ${KINDE_CLIENT_SECRET}
+    audience: https://moldavets.kinde.com/api

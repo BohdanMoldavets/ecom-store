@@ -1,6 +1,5 @@
 package com.moldavets.ecom_store.common.auth.config;
 
-import org.hibernate.action.internal.AbstractEntityInsertAction;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -22,7 +21,7 @@ public class SecurityConfiguration {
                         authorizeRequests
                                 .requestMatchers("/api/**").authenticated())
                 .oauth2ResourceServer(oauth2 ->
-                        oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(new JwtAuthenticationConverter())))
+                        oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(new KindeJwtAuthenticationConverter())))
                 .build();
     }
 

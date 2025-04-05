@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class JwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
+public class KindeJwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
     @Override
     public AbstractAuthenticationToken convert(Jwt source) {
         return new JwtAuthenticationToken(source,
