@@ -3,12 +3,14 @@ package com.moldavets.ecom_store.order.model.user.model;
 import com.moldavets.ecom_store.order.model.user.vo.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class User {
 
@@ -18,7 +20,7 @@ public class User {
 
     private UserEmail email;
 
-    private UserPublicId userPublicId;
+    private UserPublicId publicId;
 
     private UserImageUrl imageUrl;
 
@@ -73,7 +75,7 @@ public class User {
     }
 
     public void initFieldsForSignup() {
-        this.userPublicId = new UserPublicId(UUID.randomUUID());
+        this.publicId = new UserPublicId(UUID.randomUUID());
     }
 
     private void validateRequiredFields() {
@@ -95,8 +97,8 @@ public class User {
         return email;
     }
 
-    public UserPublicId getUserPublicId() {
-        return userPublicId;
+    public UserPublicId getPublicId() {
+        return publicId;
     }
 
     public UserImageUrl getImageUrl() {
