@@ -20,7 +20,6 @@ public class UserSynchronizer {
 
     private static final String UPDATE_AT_KEY = "last_signed_in";
 
-    @Autowired
     public UserSynchronizer(UserRepository userRepository, KindeService kindeService) {
         this.userRepository = userRepository;
         this.kindeService = kindeService;

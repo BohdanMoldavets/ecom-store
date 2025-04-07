@@ -31,7 +31,6 @@ public class SpringDataUserRepository implements UserRepository {
     }
 
     @Override
-    @Transactional
     public void save(User user) {
         if(user.getDbId() != null) {
             Optional<UserEntity> tempUser = jpaUserRepository.findById(user.getDbId());
@@ -46,7 +45,6 @@ public class SpringDataUserRepository implements UserRepository {
     }
 
     @Override
-    @Transactional
     public void updateAddress(UserPublicId userPublicId, UserAddressToUpdate userAddress) {
         jpaUserRepository.updateAddress(
                 userPublicId.value(),

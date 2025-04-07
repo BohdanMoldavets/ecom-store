@@ -8,10 +8,13 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
 public class UserReader {
 
     private final UserRepository userRepository;
+
+    public UserReader(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public Optional<User> getByEmail(UserEmail userEmail) {
         return userRepository.getOneByEmail(userEmail);
