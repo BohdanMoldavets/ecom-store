@@ -24,8 +24,8 @@ public class UserApplicationService {
     }
 
     @Transactional
-    public User getAuthenticatedUserWithSync(Jwt accessToken, boolean forceResync) {
-        userSynchronizer.syncWithIdp(accessToken, forceResync);
+    public User getAuthenticatedUserWithSync(Jwt jwtToken, boolean forceResync) {
+        userSynchronizer.syncWithIdp(jwtToken, forceResync);
         return userReader.getByEmail(new UserEmail(AuthenticatedUser.username().get()))
                 .orElseThrow();
     }

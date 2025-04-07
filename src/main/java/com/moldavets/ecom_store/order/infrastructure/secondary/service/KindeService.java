@@ -1,5 +1,7 @@
 package com.moldavets.ecom_store.order.infrastructure.secondary.service;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.ContentType;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +21,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@NoArgsConstructor
 public class KindeService {
 
     @Value("${application.kinde.api}")
@@ -26,6 +29,9 @@ public class KindeService {
 
     @Value("${application.kinde.client-id}")
     private String clientId;
+
+    @Value("${application.kinde.client-secret}")
+    private String clientSecret;
 
     @Value("${application.kinde.audience}")
     private String audience;
@@ -58,7 +64,7 @@ public class KindeService {
                     .body("grant_type=client_credentials&audience="+ URLEncoder.encode(audience, StandardCharsets.UTF_8))
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                    .header("Authorization", "Basic" + Base64.getEncoder().encodeToString((clientId + ":" + audience).getBytes(StandardCharsets.UTF_8)))
+                    .header("Authorization", "Basic" + Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes(StandardCharsets.UTF_8)))
                     .header("Content-Type", ContentType.APPLICATION_FORM_URLENCODED.getMimeType())
                     .retrieve()
                     .toEntity(KindeAccessToken.class);
