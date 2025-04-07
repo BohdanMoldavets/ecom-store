@@ -32,7 +32,7 @@ public class UserSynchronizer {
         Map<String, Object> userInfo = kindeService.getUserInfo(claims.get("sub").toString());
 
         User user = User.fromTokenAttributes(userInfo, rolesFromToken);
-        Optional<User> storedUser = userRepository.getByEmail(user.getEmail());
+        Optional<User> storedUser = userRepository.getOneByEmail(user.getEmail());
 
         if(storedUser.isPresent()) {
             if(claims.get(UPDATE_AT_KEY) != null) {

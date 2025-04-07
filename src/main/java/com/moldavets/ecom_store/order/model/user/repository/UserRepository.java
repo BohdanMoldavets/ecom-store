@@ -1,7 +1,6 @@
 package com.moldavets.ecom_store.order.model.user.repository;
 
 import com.moldavets.ecom_store.order.model.user.model.User;
-import com.moldavets.ecom_store.order.model.user.vo.UserAddress;
 import com.moldavets.ecom_store.order.model.user.vo.UserAddressToUpdate;
 import com.moldavets.ecom_store.order.model.user.vo.UserEmail;
 import com.moldavets.ecom_store.order.model.user.vo.UserPublicId;
@@ -14,7 +13,7 @@ public interface UserRepository {
 
     Optional<User> get(UserPublicId userPublicId);
 
-    Optional<User> getByEmail(UserEmail userEmail);
+    Optional<User> getOneByEmail(UserEmail userEmail);
 
     void updateAddress(UserPublicId userPublicId, UserAddressToUpdate userAddress);
 }
