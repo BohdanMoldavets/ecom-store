@@ -10,6 +10,4 @@ public interface CategoryRepository {
     Page<Category> findAll(Pageable pageable);
     Integer deleteById(PublicId publicId);
     Category save(Category categoryToBeCreated);
-
-
 }
