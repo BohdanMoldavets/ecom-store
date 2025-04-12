@@ -1,4 +1,4 @@
-package com.moldavets.ecom_store.product.infrastructure.primary;
+package com.moldavets.ecom_store.product.infrastructure.primary.model;
 
 import com.moldavets.ecom_store.product.model.Category;
 import com.moldavets.ecom_store.product.vo.CategoryName;

@@ -1,10 +1,9 @@
-package com.moldavets.ecom_store.product.infrastructure.primary;
+package com.moldavets.ecom_store.product.infrastructure.primary.model;
 
 import com.moldavets.ecom_store.product.model.Picture;
 import lombok.Builder;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 public record RestPicture(byte[] file,
