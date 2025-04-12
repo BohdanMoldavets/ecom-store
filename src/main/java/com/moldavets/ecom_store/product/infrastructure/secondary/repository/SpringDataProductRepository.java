@@ -24,7 +24,6 @@ public class SpringDataProductRepository implements ProductRepository {
 
     private final JpaProductPictureRepository jpaProductPictureRepository;
 
-    @Autowired
     public SpringDataProductRepository(JpaCategoryRepository jpaCategoryRepository,
                                        JpaProductRepository jpaProductRepository,
                                        JpaProductPictureRepository jpaProductPictureRepository) {

@@ -14,7 +14,6 @@ public class SpringDataCategoryRepository implements CategoryRepository {
 
     private final JpaCategoryRepository jpaCategoryRepository;
 
-    @Autowired
     public SpringDataCategoryRepository(JpaCategoryRepository jpaCategoryRepository) {
         this.jpaCategoryRepository = jpaCategoryRepository;
     }

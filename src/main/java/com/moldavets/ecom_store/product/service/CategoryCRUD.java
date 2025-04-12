@@ -3,7 +3,6 @@ package com.moldavets.ecom_store.product.service;
 import com.moldavets.ecom_store.product.model.Category;
 import com.moldavets.ecom_store.product.repository.CategoryRepository;
 import com.moldavets.ecom_store.product.vo.PublicId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

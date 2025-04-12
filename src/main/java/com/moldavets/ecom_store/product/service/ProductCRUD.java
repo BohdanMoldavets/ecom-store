@@ -14,7 +14,7 @@ public class ProductCRUD {
         this.productRepository = productRepository;
     }
 
-    public Product create(Product product) {
+    public Product save(Product product) {
         product.initDefaultFields();
         return productRepository.save(product);
     }

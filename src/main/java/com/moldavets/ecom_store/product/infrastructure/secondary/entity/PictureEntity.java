@@ -17,7 +17,7 @@ public class PictureEntity extends AbstractAuditingEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pictureSequence")
-    @SequenceGenerator(name = "pictureSequence", sequenceName = "product_picture_sequence")
+    @SequenceGenerator(name = "pictureSequence", sequenceName = "product_picture_sequence", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
