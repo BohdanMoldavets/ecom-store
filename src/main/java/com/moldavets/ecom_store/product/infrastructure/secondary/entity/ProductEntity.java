@@ -45,7 +45,7 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
     private ProductSize size;
 
     @Column(name = "public_id", unique = true)
-    private UUID publicID;
+    private UUID publicId;
 
     @Column(name = "nb_in_stock")
     private Integer nbInStock;
@@ -80,7 +80,7 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
         this.price = price;
         this.featured = featured;
         this.size = size;
-        this.publicID = publicID;
+        this.publicId = publicID;
         this.nbInStock = nbInStock;
         this.pictures = pictures;
         this.category = category;
@@ -102,7 +102,7 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
                 .featured(product.isFeatured())
                 .size(product.getSize())
                 .nbInStock(product.getNbInStock())
-                .publicID(product.getPublicId().id())
+                .publicId(product.getPublicId().id())
                 .category(CategoryEntity.from(product.getCategory()))
                 .pictures(PictureEntity.from(product.getPictures()))
                 .build();
@@ -116,7 +116,7 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
                 .name(new ProductName(entity.getName()))
                 .price(new ProductPrice(entity.getPrice()))
                 .size(entity.getSize())
-                .publicId(new PublicId(entity.getPublicID()))
+                .publicId(new PublicId(entity.getPublicId()))
                 .category(CategoryEntity.to(entity.getCategory()))
                 .pictures(PictureEntity.to(entity.getPictures()))
                 .featured(entity.isFeatured())
@@ -189,12 +189,12 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
         this.size = size;
     }
 
-    public UUID getPublicID() {
-        return publicID;
+    public UUID getPublicId() {
+        return publicId;
     }
 
-    public void setPublicID(UUID publicID) {
-        this.publicID = publicID;
+    public void setPublicId(UUID publicID) {
+        this.publicId = publicID;
     }
 
     public Integer getNbInStock() {
@@ -225,11 +225,11 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
         ProductEntity that = (ProductEntity) object;
-        return Double.compare(price, that.price) == 0 && featured == that.featured && Objects.equals(brand, that.brand) && Objects.equals(color, that.color) && Objects.equals(description, that.description) && Objects.equals(name, that.name) && size == that.size && Objects.equals(publicID, that.publicID);
+        return Double.compare(price, that.price) == 0 && featured == that.featured && Objects.equals(brand, that.brand) && Objects.equals(color, that.color) && Objects.equals(description, that.description) && Objects.equals(name, that.name) && size == that.size && Objects.equals(publicId, that.publicId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(brand, color, description, name, price, featured, size, publicID);
+        return Objects.hash(brand, color, description, name, price, featured, size, publicId);
     }
 }

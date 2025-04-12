@@ -28,13 +28,18 @@ public class PictureEntity extends AbstractAuditingEntity<Long> {
     @Column(name = "file_content_type", nullable = false)
     private String mimeType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_fk", nullable = false)
+    private ProductEntity product;
+
     public PictureEntity() {
     }
 
-    public PictureEntity(Long id, byte[] file, String mimeType) {
+    public PictureEntity(Long id, byte[] file, String mimeType, ProductEntity product) {
         this.id = id;
         this.file = file;
         this.mimeType = mimeType;
+        this.product = product;
     }
 
     public static PictureEntity from(Picture picture) {
@@ -82,6 +87,14 @@ public class PictureEntity extends AbstractAuditingEntity<Long> {
 
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    public ProductEntity getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductEntity product) {
+        this.product = product;
     }
 
     @Override
