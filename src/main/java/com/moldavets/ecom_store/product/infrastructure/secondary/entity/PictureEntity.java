@@ -7,6 +7,7 @@ import lombok.Builder;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -43,8 +44,8 @@ public class PictureEntity extends AbstractAuditingEntity<Long> {
                 .build();
     }
 
-    public static List<PictureEntity> from(List<Picture> pictures) {
-        return pictures.stream().map(PictureEntity::from).collect(Collectors.toList());
+    public static Set<PictureEntity> from(List<Picture> pictures) {
+        return pictures.stream().map(PictureEntity::from).collect(Collectors.toSet());
     }
 
     public static Picture to (PictureEntity pictureEntity) {
@@ -54,7 +55,7 @@ public class PictureEntity extends AbstractAuditingEntity<Long> {
                 .build();
     }
 
-    public static List<Picture> to (List<PictureEntity> pictureEntity) {
+    public static List<Picture> to (Set<PictureEntity> pictureEntity) {
         return pictureEntity.stream().map(PictureEntity::to).collect(Collectors.toList());
     }
 

@@ -1,6 +1,6 @@
 package com.moldavets.ecom_store.product.vo;
 
-public record ProductPrice(float value) {
+public record ProductPrice(double value) {
 
     public ProductPrice {
         if(value < 0.1) {
