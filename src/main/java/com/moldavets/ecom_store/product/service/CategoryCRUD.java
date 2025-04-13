@@ -1,5 +1,6 @@
 package com.moldavets.ecom_store.product.service;
 
+import com.moldavets.ecom_store.product.infrastructure.primary.exception.EntityNotFoundException;
 import com.moldavets.ecom_store.product.model.Category;
 import com.moldavets.ecom_store.product.repository.CategoryRepository;
 import com.moldavets.ecom_store.product.vo.PublicId;
@@ -26,7 +27,9 @@ public class CategoryCRUD {
     public PublicId deleteById(PublicId categoryId) {
         int numOfDeletedRows = categoryRepository.deleteById(categoryId);
         if(numOfDeletedRows != 1) {
-            //TODO EXCEPTION ENTITY NOT FOUND;
+            throw new EntityNotFoundException(
+                    String.format("Category with id %s not found", categoryId)
+            );
         }
         return categoryId;
     }

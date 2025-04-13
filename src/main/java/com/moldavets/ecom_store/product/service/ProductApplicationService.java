@@ -45,4 +45,9 @@ public class ProductApplicationService {
     public PublicId deleteCategory(PublicId productId) {
         return categoryCRUD.deleteById(productId);
     }
+
+    @Transactional(readOnly = true)
+    public Page<Category> findAllCategories(Pageable pageable) {
+        return categoryCRUD.findAll(pageable);
+    }
 }

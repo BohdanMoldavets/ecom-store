@@ -32,9 +32,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/products")
 public class ProductsAdminController {
 
-    private final ProductApplicationService productApplicationService;
+    protected static final String ROLE_ADMIN = "ROLE_ADMIN";
 
-    private static final String ROLE_ADMIN = "ROLE_ADMIN";
+    private final ProductApplicationService productApplicationService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -72,7 +72,7 @@ public class ProductsAdminController {
 
         Product newProduct = RestProduct.to(restProduct);
         Product storedProduct = productApplicationService.createProduct(newProduct);
-        return new ResponseEntity(RestProduct.from(storedProduct), HttpStatus.OK);
+        return new ResponseEntity(RestProduct.from(storedProduct), HttpStatus.CREATED);
     }
 
     @DeleteMapping
