@@ -1,5 +1,6 @@
 package com.moldavets.ecom_store.product.service;
 
+import com.moldavets.ecom_store.product.infrastructure.primary.exception.EntityNotFoundException;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.repository.ProductRepository;
 import com.moldavets.ecom_store.product.vo.PublicId;
@@ -26,7 +27,9 @@ public class ProductCRUD {
     public PublicId deleteById(PublicId productId) {
         int numOfDeletedRows = productRepository.delete(productId);
         if(numOfDeletedRows != 1) {
-            //TODO THROW EXCEPTION
+            throw new EntityNotFoundException(
+                    String.format("The product with id %s was not found", productId)
+            );
         }
         return productId;
     }

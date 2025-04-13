@@ -45,7 +45,4 @@ public class ProductApplicationService {
     public PublicId deleteCategory(PublicId productId) {
         return categoryCRUD.deleteById(productId);
     }
-
-
-
 }
