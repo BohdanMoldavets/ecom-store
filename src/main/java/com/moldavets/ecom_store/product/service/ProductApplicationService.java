@@ -15,10 +15,12 @@ public class ProductApplicationService {
 
     private final ProductCRUD productCRUD;
     private final CategoryCRUD categoryCRUD;
+    private final ProductShop productShop;
 
     public ProductApplicationService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productCRUD = new ProductCRUD(productRepository);
         this.categoryCRUD = new CategoryCRUD(categoryRepository);
+        this.productShop = new ProductShop(productRepository);
     }
 
     @Transactional
@@ -49,5 +51,9 @@ public class ProductApplicationService {
     @Transactional(readOnly = true)
     public Page<Category> findAllCategories(Pageable pageable) {
         return categoryCRUD.findAll(pageable);
+    }
+
+    public Page<Product> getFeaturedProducts(Pageable pageable) {
+        return productShop.getFeaturedProducts(pageable);
     }
 }

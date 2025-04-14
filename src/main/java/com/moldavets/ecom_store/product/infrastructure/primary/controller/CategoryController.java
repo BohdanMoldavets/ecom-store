@@ -29,7 +29,6 @@ public class CategoryController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('" + ROLE_ADMIN + "')")
     public ResponseEntity<Page<RestCategory>> getAll(Pageable pageable) {
         Page<Category> categories = productApplicationService.findAllCategories(pageable);
         Page<RestCategory> restCategories =  new PageImpl<>(

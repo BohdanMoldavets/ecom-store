@@ -9,5 +9,6 @@ public interface ProductRepository {
     Product save(Product productToBeCreated);
     Page<Product> findAll(Pageable pageable);
     int delete(PublicId publicId);
+    Page<Product> findAllFeaturedProduct(Pageable pageable);
 
 }
