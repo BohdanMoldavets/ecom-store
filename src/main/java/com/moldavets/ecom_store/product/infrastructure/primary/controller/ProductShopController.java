@@ -2,8 +2,10 @@ package com.moldavets.ecom_store.product.infrastructure.primary.controller;
 
 import com.moldavets.ecom_store.product.infrastructure.primary.exception.EntityNotFoundException;
 import com.moldavets.ecom_store.product.infrastructure.primary.model.RestProduct;
+import com.moldavets.ecom_store.product.model.FilterQuery;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.service.ProductApplicationService;
+import com.moldavets.ecom_store.product.vo.ProductSize;
 import com.moldavets.ecom_store.product.vo.PublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -65,5 +68,24 @@ public class ProductShopController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<RestProduct>> filter(Pageable pageable,
+                                                    @RequestParam("categoryId") UUID categoryId,
+                                                    @RequestParam(value = "productSizes", required = false) List<ProductSize> sizes) {
+        FilterQuery.FilterQueryBuilder filterBuilder = FilterQuery.builder().id(new PublicId(categoryId));
+
+        if(sizes != null) {
+            filterBuilder.sizes(sizes);
+        }
+
+        Page<Product> products = productApplicationService.filter(pageable, filterBuilder.build());
+        PageImpl<RestProduct> restProducts = new PageImpl<>(
+                products.getContent().stream().map(RestProduct::from).toList(),
+                pageable,
+                products.getTotalElements()
+        );
+        return new ResponseEntity<>(restProducts, HttpStatus.OK);
     }
 }

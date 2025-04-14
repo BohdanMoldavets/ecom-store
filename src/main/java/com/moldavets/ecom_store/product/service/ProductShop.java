@@ -1,6 +1,7 @@
 package com.moldavets.ecom_store.product.service;
 
 import com.moldavets.ecom_store.product.infrastructure.primary.exception.EntityNotFoundException;
+import com.moldavets.ecom_store.product.model.FilterQuery;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.repository.ProductRepository;
 import com.moldavets.ecom_store.product.vo.PublicId;
@@ -31,5 +32,9 @@ public class ProductShop {
                 product.getCategory().getPublicId(),
                 productPublicId
         );
+    }
+
+    public Page<Product> filter(Pageable pageable, FilterQuery filterQuery) {
+        return productRepository.findByCategoryAndSize(pageable, filterQuery);
     }
 }

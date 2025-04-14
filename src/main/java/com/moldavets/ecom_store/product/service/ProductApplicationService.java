@@ -1,6 +1,7 @@
 package com.moldavets.ecom_store.product.service;
 
 import com.moldavets.ecom_store.product.model.Category;
+import com.moldavets.ecom_store.product.model.FilterQuery;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.repository.CategoryRepository;
 import com.moldavets.ecom_store.product.repository.ProductRepository;
@@ -68,5 +69,10 @@ public class ProductApplicationService {
     @Transactional(readOnly = true)
     public Page<Product> findRelatedProducts(Pageable pageable, PublicId productId) {
         return productShop.findRelated(pageable, productId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Product> filter(Pageable pageable, FilterQuery filterQuery) {
+        return productShop.filter(pageable, filterQuery);
     }
 }

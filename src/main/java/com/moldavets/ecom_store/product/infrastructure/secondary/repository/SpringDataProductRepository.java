@@ -3,6 +3,7 @@ package com.moldavets.ecom_store.product.infrastructure.secondary.repository;
 import com.moldavets.ecom_store.product.infrastructure.secondary.entity.CategoryEntity;
 import com.moldavets.ecom_store.product.infrastructure.secondary.entity.PictureEntity;
 import com.moldavets.ecom_store.product.infrastructure.secondary.entity.ProductEntity;
+import com.moldavets.ecom_store.product.model.FilterQuery;
 import com.moldavets.ecom_store.product.model.Picture;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.repository.ProductRepository;
@@ -73,6 +74,13 @@ public class SpringDataProductRepository implements ProductRepository {
     @Override
     public Page<Product> findAllFeaturedProduct(Pageable pageable) {
         return jpaProductRepository.findAllByFeaturedTrue(pageable).map(ProductEntity::to);
+    }
+
+    @Override
+    public Page<Product> findByCategoryAndSize(Pageable pageable, FilterQuery filterQuery) {
+        return jpaProductRepository
+                .findByCategoryPublicIdAndSizesIn(pageable, filterQuery.id().id(), filterQuery.sizes())
+                .map(ProductEntity::to);
     }
 
     private void saveAllPictures(List<Picture> pictures, ProductEntity productEntity) {
