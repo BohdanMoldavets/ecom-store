@@ -15,4 +15,6 @@ public interface JpaProductRepository extends JpaRepository<ProductEntity, Long>
     Optional<ProductEntity> findByPublicId(UUID publicID);
 
     Page<ProductEntity> findAllByFeaturedTrue(Pageable pageable);
+
+    Page<ProductEntity> findByCategoryPublicIdAndPublicIdNot(Pageable pageable, UUID categoryPublicId, UUID excludedProductPublicId);
 }

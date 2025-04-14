@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -50,6 +51,18 @@ public class SpringDataProductRepository implements ProductRepository {
     @Override
     public Page<Product> findAll(Pageable pageable) {
         return jpaProductRepository.findAll(pageable).map(ProductEntity::to);
+    }
+
+    @Override
+    public Optional<Product> findByPublicId(PublicId publicId) {
+        return jpaProductRepository.findByPublicId(publicId.id()).map(ProductEntity::to);
+    }
+
+    @Override
+    public Page<Product> findByCategoryExcludingOne(Pageable pageable, PublicId categoryPublicId, PublicId productPublicId) {
+        return jpaProductRepository
+                .findByCategoryPublicIdAndPublicIdNot(pageable, categoryPublicId.id(), productPublicId.id())
+                .map(ProductEntity::to);
     }
 
     @Override
