@@ -21,7 +21,9 @@ public interface JpaProductRepository extends JpaRepository<ProductEntity, Long>
 
     Page<ProductEntity> findByCategoryPublicIdAndPublicIdNot(Pageable pageable, UUID categoryPublicId, UUID excludedProductPublicId);
 
-
     @Query("SELECT p FROM ProductEntity p WHERE (:sizes IS NULL OR p.size IN (:sizes)) AND p.category.publicId = :categoryPublicId ")
     Page<ProductEntity> findByCategoryPublicIdAndSizesIn(Pageable pageable, UUID categoryPublicId, List<ProductSize> sizes);
+
+    List<ProductEntity> findAllByPublicIdIn (List<UUID> ids);
+
 }

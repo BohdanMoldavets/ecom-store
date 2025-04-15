@@ -1,6 +1,9 @@
 package com.moldavets.ecom_store.order.model.order.model;
 
+import com.moldavets.ecom_store.product.model.ProductCart;
 import lombok.Builder;
+
+import java.util.List;
 
 @Builder
 public class DetailCartResponse {

@@ -30,7 +30,17 @@ public class ProductCart {
         this.publicId = publicId;
     }
 
-    public void assertRequiredFields(ProductName name,
+    public static ProductCart from (Product product) {
+        return ProductCart.builder()
+                .name(product.getName())
+                .price(product.getPrice())
+                .brand(product.getBrand())
+                .picture(product.getPictures().stream().findFirst().orElseThrow())
+                .publicId(product.getPublicId())
+                .build();
+    }
+
+    private void assertRequiredFields(ProductName name,
                                      ProductPrice price,
                                      ProductBrand brand,
                                      Picture picture,
@@ -42,5 +52,43 @@ public class ProductCart {
         Objects.requireNonNull(publicId);
     }
 
+    public ProductName getName() {
+        return name;
+    }
 
+    public void setName(ProductName name) {
+        this.name = name;
+    }
+
+    public ProductPrice getPrice() {
+        return price;
+    }
+
+    public void setPrice(ProductPrice price) {
+        this.price = price;
+    }
+
+    public ProductBrand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(ProductBrand brand) {
+        this.brand = brand;
+    }
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
+
+    public PublicId getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(PublicId publicId) {
+        this.publicId = publicId;
+    }
 }

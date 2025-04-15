@@ -7,6 +7,7 @@ import com.moldavets.ecom_store.product.vo.PublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ProductCRUD {
@@ -40,4 +41,7 @@ public class ProductCRUD {
         return productRepository.findByPublicId(productId);
     }
 
+    public List<Product> findAllByPublicIdIn(List<PublicId> publicIds) {
+        return productRepository.findByPublicIds(publicIds);
+    }
 }

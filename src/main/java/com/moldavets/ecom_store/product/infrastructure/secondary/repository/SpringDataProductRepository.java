@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Repository
 public class SpringDataProductRepository implements ProductRepository {
@@ -81,6 +82,13 @@ public class SpringDataProductRepository implements ProductRepository {
         return jpaProductRepository
                 .findByCategoryPublicIdAndSizesIn(pageable, filterQuery.id().id(), filterQuery.sizes())
                 .map(ProductEntity::to);
+    }
+
+    @Override
+    public List<Product> findByPublicIds(List<PublicId> publicIds) {
+        List<UUID> uuids = publicIds.stream().map(PublicId::id).toList();
+        return jpaProductRepository.findAllByPublicIdIn(uuids).stream()
+                .map(ProductEntity::to).toList();
     }
 
     private void saveAllPictures(List<Picture> pictures, ProductEntity productEntity) {
