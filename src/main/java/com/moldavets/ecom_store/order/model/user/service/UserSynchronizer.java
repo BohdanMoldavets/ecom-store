@@ -1,11 +1,10 @@
 package com.moldavets.ecom_store.order.model.user.service;
 
 import com.moldavets.ecom_store.common.auth.service.AuthenticatedUser;
-import com.moldavets.ecom_store.order.infrastructure.secondary.service.KindeService;
+import com.moldavets.ecom_store.order.infrastructure.secondary.service.kinde.KindeService;
 import com.moldavets.ecom_store.order.model.user.model.User;
 import com.moldavets.ecom_store.order.model.user.repository.UserRepository;
 import com.moldavets.ecom_store.order.model.user.vo.UserAddressToUpdate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.time.Instant;

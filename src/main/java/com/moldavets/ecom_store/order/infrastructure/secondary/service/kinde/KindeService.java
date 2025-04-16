@@ -1,6 +1,5 @@
-package com.moldavets.ecom_store.order.infrastructure.secondary.service;
+package com.moldavets.ecom_store.order.infrastructure.secondary.service.kinde;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.ContentType;
@@ -12,7 +11,6 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

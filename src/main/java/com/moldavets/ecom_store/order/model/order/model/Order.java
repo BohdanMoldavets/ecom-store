@@ -1,6 +1,7 @@
 package com.moldavets.ecom_store.order.model.order.model;
 
 import com.moldavets.ecom_store.order.model.order.vo.OrderStatus;
+import com.moldavets.ecom_store.order.model.order.vo.StripeSessionId;
 import com.moldavets.ecom_store.order.model.user.model.User;
 import com.moldavets.ecom_store.product.vo.PublicId;
 import lombok.Builder;
@@ -29,13 +30,13 @@ public class Order {
         this.orderedProducts = orderedProducts;
     }
 
-    public static Order create(User connectedUser, List<OrderedProduct> orderedProducts, String stripeSessionId) {
+    public static Order create(User connectedUser, List<OrderedProduct> orderedProducts, StripeSessionId stripeSessionId) {
         return Order.builder()
                 .publicId(new PublicId(UUID.randomUUID()))
                 .user(connectedUser)
                 .status(OrderStatus.PENDING)
                 .orderedProducts(orderedProducts)
-                .stripeId(stripeSessionId)
+                .stripeId(stripeSessionId.value())
                 .build();
     }
 

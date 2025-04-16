@@ -75,6 +75,11 @@ application:
     client-secret: ${KINDE_CLIENT_SECRET}
     audience: https://moldavets.kinde.com/api
 
+  stripe:
+    api-key: ${STRIPE_API_KEY}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET}
+
+
 logging:
   level:
     org.springframework.security: DEBUG
