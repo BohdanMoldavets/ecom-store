@@ -1,5 +1,6 @@
 package com.moldavets.ecom_store.order.model.order.service;
 
+import com.moldavets.ecom_store.order.infrastructure.secondary.service.stripe.StripeService;
 import com.moldavets.ecom_store.order.model.order.model.DetailCartItemRequest;
 import com.moldavets.ecom_store.order.model.order.model.Order;
 import com.moldavets.ecom_store.order.model.order.model.OrderedProduct;
@@ -14,16 +15,18 @@ import java.util.List;
 public class OrderCreator {
 
     private final OrderRepository orderRepository;
+    private final StripeService stripeService;
 
-    public OrderCreator(OrderRepository orderRepository) {
+    public OrderCreator(OrderRepository orderRepository, StripeService stripeService) {
         this.orderRepository = orderRepository;
+        this.stripeService = stripeService;
     }
 
     public StripeSessionId create(List<Product> productsInformation,
                                   List<DetailCartItemRequest> items,
                                   User connectedUser) {
 
-        StripeSessionId stripeSessionId = null;
+        StripeSessionId stripeSessionId = this.stripeService.createPayment(connectedUser, productsInformation, items);
 
         List<OrderedProduct> orderedProducts = new ArrayList<>();
 
