@@ -1,10 +1,7 @@
 package com.moldavets.ecom_store.order.infrastructure.primary.contoller;
 
 import com.moldavets.ecom_store.common.excpetion.CartPaymentException;
-import com.moldavets.ecom_store.order.infrastructure.primary.model.RestCartItemRequest;
-import com.moldavets.ecom_store.order.infrastructure.primary.model.RestDetailCartResponse;
-import com.moldavets.ecom_store.order.infrastructure.primary.model.RestOrderRead;
-import com.moldavets.ecom_store.order.infrastructure.primary.model.RestStripeSession;
+import com.moldavets.ecom_store.order.infrastructure.primary.model.*;
 import com.moldavets.ecom_store.order.model.order.model.*;
 import com.moldavets.ecom_store.order.model.order.vo.StripeSessionId;
 import com.moldavets.ecom_store.order.model.user.vo.UserAddress;
@@ -91,6 +88,28 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<Page<RestOrderRead>> getOrdersForConnectedUser(Pageable pageable){
+        Page<Order> orders = orderApplicationService.findOrdersForConnectedUser(pageable);
+        PageImpl<RestOrderRead> restOrderReads = new PageImpl<>(
+                orders.stream().map(RestOrderRead::from).toList(),
+                pageable,
+                orders.getTotalElements()
+        );
+        return new ResponseEntity<>(restOrderReads, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<Page<RestOrderReadAdmin>> getOrdersForAdmin(Pageable pageable){
+        Page<Order> orders = orderApplicationService.findOrdersForAdmin(pageable);
+        PageImpl<RestOrderReadAdmin> restOrderReads = new PageImpl<>(
+                orders.stream().map(RestOrderReadAdmin::from).toList(),
+                pageable,
+                orders.getTotalElements()
+        );
+        return new ResponseEntity<>(restOrderReads, HttpStatus.OK);
+    }
+
     private void handleCheckoutSessionCompleted(StripeObject rawStripeObject) {
         if(rawStripeObject instanceof Session session) {
             Address address = session.getCustomerDetails().getAddress();
@@ -114,16 +133,5 @@ public class OrderController {
 
             orderApplicationService.updateOrder(sessionInformation);
         }
-    }
-
-    @GetMapping("/user")
-    public ResponseEntity<Page<RestOrderRead>> getOrdersForConnectedUser(Pageable pageable){
-        Page<Order> orders = orderApplicationService.findOrdersForConnectedUser(pageable);
-        PageImpl<RestOrderRead> restOrderReads = new PageImpl<>(
-                orders.stream().map(RestOrderRead::from).toList(),
-                pageable,
-                orders.getTotalElements()
-        );
-        return new ResponseEntity<>(restOrderReads, HttpStatus.OK);
     }
 }

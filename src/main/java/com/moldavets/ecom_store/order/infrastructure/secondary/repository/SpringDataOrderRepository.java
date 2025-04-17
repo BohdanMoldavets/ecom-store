@@ -51,4 +51,10 @@ public class SpringDataOrderRepository implements OrderRepository {
         return jpaOrderRepository.findAllByUserPublicId(publicId.id(), pageable)
                 .map(OrderEntity::to);
     }
+
+    @Override
+    public Page<Order> findAll(Pageable pageable) {
+        return jpaOrderRepository.findAll(pageable)
+                .map(OrderEntity::to);
+    }
 }

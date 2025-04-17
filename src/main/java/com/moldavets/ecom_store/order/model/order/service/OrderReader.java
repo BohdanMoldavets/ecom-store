@@ -19,4 +19,8 @@ public class OrderReader {
     public Page<Order> findAllByUserPublicId(UUID userPublicId, Pageable pageable) {
         return orderRepository.findAllByUserPublicId(new UserPublicId(userPublicId), pageable);
     }
+
+    public Page<Order> findAll(Pageable pageable) {
+        return orderRepository.findAll(pageable);
+    }
 }

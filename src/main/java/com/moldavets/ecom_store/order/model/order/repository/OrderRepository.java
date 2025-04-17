@@ -17,4 +17,6 @@ public interface OrderRepository {
     Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation);
 
     Page<Order> findAllByUserPublicId(UserPublicId publicId, Pageable pageable);
+
+    Page<Order> findAll(Pageable pageable);
 }

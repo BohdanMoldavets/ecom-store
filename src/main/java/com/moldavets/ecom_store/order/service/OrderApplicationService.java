@@ -74,4 +74,11 @@ public class OrderApplicationService {
         User authenticatedUser = userApplicationService.getAuthenticatedUser();
         return orderReader.findAllByUserPublicId(authenticatedUser.getPublicId().value(), pageable);
     }
+
+    @Transactional(readOnly = true)
+    public Page<Order> findOrdersForAdmin(Pageable pageable) {
+        return orderReader.findAll(pageable);
+    }
+
+
 }
