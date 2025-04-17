@@ -3,8 +3,7 @@ package com.moldavets.ecom_store.product.infrastructure.secondary.repository;
 import com.moldavets.ecom_store.product.infrastructure.secondary.entity.CategoryEntity;
 import com.moldavets.ecom_store.product.model.Category;
 import com.moldavets.ecom_store.product.repository.CategoryRepository;
-import com.moldavets.ecom_store.product.vo.PublicId;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -24,7 +23,7 @@ public class SpringDataCategoryRepository implements CategoryRepository {
     }
 
     @Override
-    public Integer deleteById(PublicId publicId) {
+    public Integer deleteById(UserPublicId publicId) {
         return jpaCategoryRepository.deleteByPublicId(publicId.id());
     }
 

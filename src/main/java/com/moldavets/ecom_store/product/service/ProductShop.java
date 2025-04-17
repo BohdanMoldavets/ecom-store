@@ -4,11 +4,9 @@ import com.moldavets.ecom_store.product.infrastructure.primary.exception.EntityN
 import com.moldavets.ecom_store.product.model.FilterQuery;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.repository.ProductRepository;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.Optional;
 
 public class ProductShop {
 
@@ -22,7 +20,7 @@ public class ProductShop {
         return productRepository.findAllFeaturedProduct(pageable);
     }
 
-    public Page<Product> findRelated(Pageable pageable, PublicId productPublicId) {
+    public Page<Product> findRelated(Pageable pageable, UserPublicId productPublicId) {
 
         Product product = productRepository.findByPublicId(productPublicId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product with id %s not found", productPublicId)));

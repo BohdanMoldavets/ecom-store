@@ -8,8 +8,7 @@ import com.moldavets.ecom_store.product.model.FilterQuery;
 import com.moldavets.ecom_store.product.model.Picture;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.repository.ProductRepository;
-import com.moldavets.ecom_store.product.vo.PublicId;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -57,19 +56,19 @@ public class SpringDataProductRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> findByPublicId(PublicId publicId) {
+    public Optional<Product> findByPublicId(UserPublicId publicId) {
         return jpaProductRepository.findByPublicId(publicId.id()).map(ProductEntity::to);
     }
 
     @Override
-    public Page<Product> findByCategoryExcludingOne(Pageable pageable, PublicId categoryPublicId, PublicId productPublicId) {
+    public Page<Product> findByCategoryExcludingOne(Pageable pageable, UserPublicId categoryPublicId, UserPublicId productPublicId) {
         return jpaProductRepository
                 .findByCategoryPublicIdAndPublicIdNot(pageable, categoryPublicId.id(), productPublicId.id())
                 .map(ProductEntity::to);
     }
 
     @Override
-    public int delete(PublicId publicId) {
+    public int delete(UserPublicId publicId) {
         return jpaProductRepository.deleteByPublicId(publicId.id());
     }
 
@@ -91,8 +90,8 @@ public class SpringDataProductRepository implements ProductRepository {
     }
 
     @Override
-    public List<Product> findByPublicIds(List<PublicId> publicIds) {
-        List<UUID> uuids = publicIds.stream().map(PublicId::id).toList();
+    public List<Product> findByPublicIds(List<UserPublicId> publicIds) {
+        List<UUID> uuids = publicIds.stream().map(UserPublicId::id).toList();
         return jpaProductRepository.findAllByPublicIdIn(uuids).stream()
                 .map(ProductEntity::to).toList();
     }

@@ -3,7 +3,7 @@ package com.moldavets.ecom_store.product.service;
 import com.moldavets.ecom_store.product.infrastructure.primary.exception.EntityNotFoundException;
 import com.moldavets.ecom_store.product.model.Category;
 import com.moldavets.ecom_store.product.repository.CategoryRepository;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,7 +24,7 @@ public class CategoryCRUD {
         return categoryRepository.findAll(pageable);
     }
 
-    public PublicId deleteById(PublicId categoryId) {
+    public UserPublicId deleteById(UserPublicId categoryId) {
         int numOfDeletedRows = categoryRepository.deleteById(categoryId);
         if(numOfDeletedRows != 1) {
             throw new EntityNotFoundException(

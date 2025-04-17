@@ -3,25 +3,24 @@ package com.moldavets.ecom_store.order.infrastructure.primary.contoller;
 import com.moldavets.ecom_store.common.excpetion.CartPaymentException;
 import com.moldavets.ecom_store.order.infrastructure.primary.model.RestCartItemRequest;
 import com.moldavets.ecom_store.order.infrastructure.primary.model.RestDetailCartResponse;
+import com.moldavets.ecom_store.order.infrastructure.primary.model.RestOrderRead;
 import com.moldavets.ecom_store.order.infrastructure.primary.model.RestStripeSession;
-import com.moldavets.ecom_store.order.model.order.model.DetailCartItemRequest;
-import com.moldavets.ecom_store.order.model.order.model.DetailCartRequest;
-import com.moldavets.ecom_store.order.model.order.model.DetailCartResponse;
-import com.moldavets.ecom_store.order.model.order.model.StripeSessionInformation;
+import com.moldavets.ecom_store.order.model.order.model.*;
 import com.moldavets.ecom_store.order.model.order.vo.StripeSessionId;
 import com.moldavets.ecom_store.order.model.user.vo.UserAddress;
 import com.moldavets.ecom_store.order.model.user.vo.UserAddressToUpdate;
-import com.moldavets.ecom_store.order.model.user.vo.UserPublicId;
 import com.moldavets.ecom_store.order.service.OrderApplicationService;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Address;
 import com.stripe.model.Event;
-import com.stripe.model.EventDataObjectDeserializer;
 import com.stripe.model.StripeObject;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +45,7 @@ public class OrderController {
     @GetMapping("/get-cart-details")
     public ResponseEntity<RestDetailCartResponse> getDetails(@RequestParam List<UUID> productIds) {
         List<DetailCartItemRequest> itemRequests = productIds.stream()
-                .map(uuid -> new DetailCartItemRequest(new PublicId(uuid), 1))
+                .map(uuid -> new DetailCartItemRequest(new UserPublicId(uuid), 1))
                 .toList();
 
         DetailCartRequest detailCartRequest = DetailCartRequest.builder()
@@ -105,7 +104,7 @@ public class OrderController {
 
             UserAddressToUpdate userAddressToUpdate = UserAddressToUpdate.builder()
                     .userAddress(userAddress)
-                    .publicId(new UserPublicId(UUID.fromString(session.getMetadata().get("user_public_id"))))
+                    .publicId(new com.moldavets.ecom_store.order.model.user.vo.UserPublicId(UUID.fromString(session.getMetadata().get("user_public_id"))))
                     .build();
 
             StripeSessionInformation sessionInformation = StripeSessionInformation.builder()
@@ -115,5 +114,16 @@ public class OrderController {
 
             orderApplicationService.updateOrder(sessionInformation);
         }
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<Page<RestOrderRead>> getOrdersForConnectedUser(Pageable pageable){
+        Page<Order> orders = orderApplicationService.findOrdersForConnectedUser(pageable);
+        PageImpl<RestOrderRead> restOrderReads = new PageImpl<>(
+                orders.stream().map(RestOrderRead::from).toList(),
+                pageable,
+                orders.getTotalElements()
+        );
+        return new ResponseEntity<>(restOrderReads, HttpStatus.OK);
     }
 }

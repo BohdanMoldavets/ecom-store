@@ -1,7 +1,7 @@
 package com.moldavets.ecom_store.order.infrastructure.primary.model;
 
 import com.moldavets.ecom_store.order.model.order.model.DetailCartItemRequest;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import lombok.Builder;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public record RestCartItemRequest(UUID publicId,
 
     public static DetailCartItemRequest to(RestCartItemRequest item) {
         return DetailCartItemRequest.builder()
-                .productId(new PublicId(item.publicId))
+                .productId(new UserPublicId(item.publicId))
                 .quantity(item.quantity)
                 .build();
     }

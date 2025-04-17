@@ -4,7 +4,7 @@ import com.moldavets.ecom_store.common.jpa.AbstractAuditingEntity;
 import com.moldavets.ecom_store.order.model.order.model.Order;
 import com.moldavets.ecom_store.order.model.order.model.OrderedProduct;
 import com.moldavets.ecom_store.order.model.order.vo.OrderStatus;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import jakarta.persistence.*;
 import lombok.Builder;
 
@@ -72,7 +72,7 @@ public class OrderEntity extends AbstractAuditingEntity<Long> {
                 .collect(Collectors.toSet());
 
         return Order.builder()
-                .publicId(new PublicId(orderEntity.getPublicId()))
+                .publicId(new UserPublicId(orderEntity.getPublicId()))
                 .status(orderEntity.getStatus())
                 .stripeId(orderEntity.getStripeSessionId())
                 .orderedProducts(orderedProducts.stream().toList())

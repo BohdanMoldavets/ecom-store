@@ -66,7 +66,7 @@ public class RestProduct {
                .nbInStock(product.getNbInStock());
 
        if(product.getPublicId() != null) {
-           builder.publicId(new PublicId(product.getPublicId()));
+           builder.publicId(new UserPublicId(product.getPublicId()));
        }
 
        if(product.getPictures() != null && !product.getPictures().isEmpty()) {

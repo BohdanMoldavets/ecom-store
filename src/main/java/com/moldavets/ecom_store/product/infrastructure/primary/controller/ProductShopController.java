@@ -6,7 +6,7 @@ import com.moldavets.ecom_store.product.model.FilterQuery;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.service.ProductApplicationService;
 import com.moldavets.ecom_store.product.vo.ProductSize;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +47,7 @@ public class ProductShopController {
     @GetMapping("/find-one")
     public ResponseEntity<RestProduct> getProductByPublicId(@RequestParam("publicId") UUID publicId) {
         Optional<Product> product =
-                productApplicationService.findProductById(new PublicId(publicId));
+                productApplicationService.findProductById(new UserPublicId(publicId));
 
         return product.map(tempProduct -> new ResponseEntity<>(RestProduct.from(tempProduct), HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
@@ -58,7 +58,7 @@ public class ProductShopController {
                                                                  @RequestParam("publicId") UUID publicId) {
         PageImpl<RestProduct> restProducts = null;
         try {
-            Page<Product> relatedProducts = productApplicationService.findRelatedProducts(pageable, new PublicId(publicId));
+            Page<Product> relatedProducts = productApplicationService.findRelatedProducts(pageable, new UserPublicId(publicId));
             restProducts = new PageImpl<>(
                     relatedProducts.getContent().stream().map(RestProduct::from).toList(),
                     pageable,
@@ -74,7 +74,7 @@ public class ProductShopController {
     public ResponseEntity<Page<RestProduct>> filter(Pageable pageable,
                                                     @RequestParam("categoryId") UUID categoryId,
                                                     @RequestParam(value = "productSizes", required = false) List<ProductSize> sizes) {
-        FilterQuery.FilterQueryBuilder filterBuilder = FilterQuery.builder().id(new PublicId(categoryId));
+        FilterQuery.FilterQueryBuilder filterBuilder = FilterQuery.builder().id(new UserPublicId(categoryId));
 
         if(sizes != null) {
             filterBuilder.sizes(sizes);

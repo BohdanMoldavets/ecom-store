@@ -2,7 +2,8 @@ package com.moldavets.ecom_store.order.infrastructure.secondary.repository;
 
 import com.moldavets.ecom_store.order.infrastructure.secondary.entity.OrderEntity;
 import com.moldavets.ecom_store.order.model.order.vo.OrderStatus;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,6 @@ public interface JpaOrderRepository extends JpaRepository<OrderEntity, Long> {
     void updateStatusByPublicId(OrderStatus orderStatus, UUID publicId);
 
     Optional<OrderEntity> findByStripeSessionId(String stripeSessionId);
+
+    Page<OrderEntity> findAllByUserPublicId(UUID userPublicId, Pageable pageable);
 }

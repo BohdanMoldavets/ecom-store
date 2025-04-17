@@ -8,7 +8,7 @@ import com.moldavets.ecom_store.product.infrastructure.primary.model.RestPicture
 import com.moldavets.ecom_store.product.infrastructure.primary.model.RestProduct;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.service.ProductApplicationService;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -79,7 +79,7 @@ public class ProductsAdminController {
     @PreAuthorize("hasRole('" + ROLE_ADMIN + "')")
     public ResponseEntity<UUID> deleteProductById(@RequestParam("publicId") UUID id) {
         try {
-            PublicId publicId = productApplicationService.deleteProduct(new PublicId(id));
+            UserPublicId publicId = productApplicationService.deleteProduct(new UserPublicId(id));
             return new ResponseEntity<>(publicId.id(), HttpStatus.NO_CONTENT);
         } catch (EntityNotFoundException e) {
             ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());

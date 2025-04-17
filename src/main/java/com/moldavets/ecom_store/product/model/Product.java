@@ -30,7 +30,7 @@ public class Product {
 
     private boolean featured;
 
-    private PublicId publicId;
+    private UserPublicId publicId;
 
     private Integer nbInStock;
 
@@ -44,7 +44,7 @@ public class Product {
                    List<Picture> pictures,
                    Long dbId,
                    boolean featured,
-                   PublicId publicId,
+                   UserPublicId publicId,
                    Integer nbInStock) {
         assertRequiredFields(brand, color, description, name, price, size, category, pictures, featured, nbInStock);
         this.brand = brand;
@@ -62,7 +62,7 @@ public class Product {
     }
 
     public void initDefaultFields() {
-        this.publicId = new PublicId(UUID.randomUUID());
+        this.publicId = new UserPublicId(UUID.randomUUID());
     }
 
     private void assertRequiredFields(ProductBrand brand,
@@ -126,7 +126,7 @@ public class Product {
         return featured;
     }
 
-    public PublicId getPublicId() {
+    public UserPublicId getPublicId() {
         return publicId;
     }
 

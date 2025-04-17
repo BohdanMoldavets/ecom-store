@@ -3,7 +3,7 @@ package com.moldavets.ecom_store.product.model;
 import com.moldavets.ecom_store.product.vo.ProductBrand;
 import com.moldavets.ecom_store.product.vo.ProductName;
 import com.moldavets.ecom_store.product.vo.ProductPrice;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import lombok.Builder;
 
 import java.util.Objects;
@@ -19,9 +19,9 @@ public class ProductCart {
 
     private Picture picture;
 
-    private PublicId publicId;
+    private UserPublicId publicId;
 
-    public ProductCart(ProductName name, ProductPrice price, ProductBrand brand, Picture picture, PublicId publicId) {
+    public ProductCart(ProductName name, ProductPrice price, ProductBrand brand, Picture picture, UserPublicId publicId) {
         assertRequiredFields(name, price, brand, picture, publicId);
         this.name = name;
         this.price = price;
@@ -44,7 +44,7 @@ public class ProductCart {
                                      ProductPrice price,
                                      ProductBrand brand,
                                      Picture picture,
-                                     PublicId publicId) {
+                                     UserPublicId publicId) {
         Objects.requireNonNull(name);
         Objects.requireNonNull(price);
         Objects.requireNonNull(brand);
@@ -84,11 +84,11 @@ public class ProductCart {
         this.picture = picture;
     }
 
-    public PublicId getPublicId() {
+    public UserPublicId getPublicId() {
         return publicId;
     }
 
-    public void setPublicId(PublicId publicId) {
+    public void setPublicId(UserPublicId publicId) {
         this.publicId = publicId;
     }
 }

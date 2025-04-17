@@ -4,7 +4,7 @@ import com.moldavets.ecom_store.product.infrastructure.primary.exception.EntityN
 import com.moldavets.ecom_store.product.infrastructure.primary.model.RestCategory;
 import com.moldavets.ecom_store.product.model.Category;
 import com.moldavets.ecom_store.product.service.ProductApplicationService;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -51,7 +51,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('" + ROLE_ADMIN + "')")
     public ResponseEntity<UUID> deleteCategoryById(@RequestParam("publicId") UUID id) {
         try {
-            PublicId deletedId = productApplicationService.deleteCategory(new PublicId(id));
+            UserPublicId deletedId = productApplicationService.deleteCategory(new UserPublicId(id));
             return new ResponseEntity<>(deletedId.id(), HttpStatus.NO_CONTENT);
         } catch (EntityNotFoundException e) {
             ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
