@@ -1,5 +1,6 @@
 package com.moldavets.ecom_store.product.infrastructure.secondary.repository;
 
+import com.moldavets.ecom_store.order.model.order.vo.ProductPublicId;
 import com.moldavets.ecom_store.product.infrastructure.secondary.entity.CategoryEntity;
 import com.moldavets.ecom_store.product.infrastructure.secondary.entity.PictureEntity;
 import com.moldavets.ecom_store.product.infrastructure.secondary.entity.ProductEntity;
@@ -70,6 +71,11 @@ public class SpringDataProductRepository implements ProductRepository {
     @Override
     public int delete(PublicId publicId) {
         return jpaProductRepository.deleteByPublicId(publicId.id());
+    }
+
+    @Override
+    public void updateQuantity(ProductPublicId productPublicId, long quantity) {
+        jpaProductRepository.updateQuantity(productPublicId.value(), quantity);
     }
 
     @Override

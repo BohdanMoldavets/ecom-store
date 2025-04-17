@@ -1,5 +1,6 @@
 package com.moldavets.ecom_store.product.repository;
 
+import com.moldavets.ecom_store.order.model.order.vo.ProductPublicId;
 import com.moldavets.ecom_store.product.model.FilterQuery;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.vo.PublicId;
@@ -26,6 +27,8 @@ public interface ProductRepository {
     List<Product> findByPublicIds(List<PublicId> publicIds);
 
     int delete(PublicId publicId);
+
+    void updateQuantity(ProductPublicId productPublicId, long quantity);
 }
 
 

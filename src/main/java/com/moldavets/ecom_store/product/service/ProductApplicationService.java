@@ -1,5 +1,6 @@
 package com.moldavets.ecom_store.product.service;
 
+import com.moldavets.ecom_store.order.model.order.model.OrderProductQuantity;
 import com.moldavets.ecom_store.product.model.Category;
 import com.moldavets.ecom_store.product.model.FilterQuery;
 import com.moldavets.ecom_store.product.model.Product;
@@ -20,11 +21,13 @@ public class ProductApplicationService {
     private final ProductCRUD productCRUD;
     private final CategoryCRUD categoryCRUD;
     private final ProductShop productShop;
+    private final ProductUpdater productUpdater;
 
     public ProductApplicationService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productCRUD = new ProductCRUD(productRepository);
         this.categoryCRUD = new CategoryCRUD(categoryRepository);
         this.productShop = new ProductShop(productRepository);
+        this.productUpdater = new ProductUpdater(productRepository);
     }
 
     @Transactional
@@ -80,5 +83,10 @@ public class ProductApplicationService {
     @Transactional(readOnly = true)
     public List<Product> getProductsByPublicIdsIn(List<PublicId> publicIds) {
         return productCRUD.findAllByPublicIdIn(publicIds);
+    }
+
+    @Transactional
+    public void updateProductQuantity(List<OrderProductQuantity> orderProductQuantities) {
+        productUpdater.updateProductQuantity(orderProductQuantities);
     }
 }

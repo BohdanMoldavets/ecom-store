@@ -7,19 +7,35 @@ import com.moldavets.ecom_store.order.infrastructure.primary.model.RestStripeSes
 import com.moldavets.ecom_store.order.model.order.model.DetailCartItemRequest;
 import com.moldavets.ecom_store.order.model.order.model.DetailCartRequest;
 import com.moldavets.ecom_store.order.model.order.model.DetailCartResponse;
+import com.moldavets.ecom_store.order.model.order.model.StripeSessionInformation;
 import com.moldavets.ecom_store.order.model.order.vo.StripeSessionId;
+import com.moldavets.ecom_store.order.model.user.vo.UserAddress;
+import com.moldavets.ecom_store.order.model.user.vo.UserAddressToUpdate;
+import com.moldavets.ecom_store.order.model.user.vo.UserPublicId;
 import com.moldavets.ecom_store.order.service.OrderApplicationService;
 import com.moldavets.ecom_store.product.vo.PublicId;
+import com.stripe.exception.SignatureVerificationException;
+import com.stripe.model.Address;
+import com.stripe.model.Event;
+import com.stripe.model.EventDataObjectDeserializer;
+import com.stripe.model.StripeObject;
+import com.stripe.model.checkout.Session;
+import com.stripe.net.Webhook;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
+
+    @Value("${application.stripe.webhook-secret}")
+    private String webhookSecret;
 
     private final OrderApplicationService orderApplicationService;
 
@@ -50,6 +66,54 @@ public class OrderController {
             return new ResponseEntity<>(restStripeSession, HttpStatus.OK);
         } catch (CartPaymentException cpe) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/webhook")
+    public ResponseEntity<Void> webhookStripe(@RequestBody String paymentEvent,
+                                              @RequestHeader("Stripe-Signature") String stripeSignature) {
+        Event event = null;
+
+        try {
+            event = Webhook.constructEvent(
+                    paymentEvent, stripeSignature, webhookSecret
+            );
+        } catch (SignatureVerificationException sve) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<StripeObject> rawPaymentEventOpt = event.getDataObjectDeserializer().getObject();
+
+        switch (event.getType()){
+            case "checkout.session.completed":
+                handleCheckoutSessionCompleted(rawPaymentEventOpt.orElseThrow());
+                break;
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private void handleCheckoutSessionCompleted(StripeObject rawStripeObject) {
+        if(rawStripeObject instanceof Session session) {
+            Address address = session.getCustomerDetails().getAddress();
+
+            UserAddress userAddress = UserAddress.builder()
+                    .city(address.getCity())
+                    .country(address.getCountry())
+                    .zipCode(address.getPostalCode())
+                    .street(address.getLine1())
+                    .build();
+
+            UserAddressToUpdate userAddressToUpdate = UserAddressToUpdate.builder()
+                    .userAddress(userAddress)
+                    .publicId(new UserPublicId(UUID.fromString(session.getMetadata().get("user_public_id"))))
+                    .build();
+
+            StripeSessionInformation sessionInformation = StripeSessionInformation.builder()
+                    .userAddress(userAddressToUpdate)
+                    .stripeSessionId(new StripeSessionId(session.getId()))
+                    .build();
+
+            orderApplicationService.updateOrder(sessionInformation);
         }
     }
 }
