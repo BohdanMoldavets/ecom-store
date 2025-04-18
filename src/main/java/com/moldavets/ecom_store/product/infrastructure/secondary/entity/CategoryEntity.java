@@ -3,7 +3,7 @@ package com.moldavets.ecom_store.product.infrastructure.secondary.entity;
 import com.moldavets.ecom_store.common.jpa.AbstractAuditingEntity;
 import com.moldavets.ecom_store.product.model.Category;
 import com.moldavets.ecom_store.product.vo.CategoryName;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import jakarta.persistence.*;
 import lombok.Builder;
 
@@ -58,7 +58,7 @@ public class CategoryEntity extends AbstractAuditingEntity<Long> {
         return Category.builder()
                 .dbId(entity.getId())
                 .categoryName(new CategoryName(entity.getName()))
-                .publicId(new PublicId(entity.getPublicId()))
+                .publicId(new UserPublicId(entity.getPublicId()))
                 .build();
     }
 

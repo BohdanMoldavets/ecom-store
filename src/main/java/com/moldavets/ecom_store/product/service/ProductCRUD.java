@@ -1,10 +1,14 @@
 package com.moldavets.ecom_store.product.service;
 
+import com.moldavets.ecom_store.product.infrastructure.primary.exception.EntityNotFoundException;
 import com.moldavets.ecom_store.product.model.Product;
 import com.moldavets.ecom_store.product.repository.ProductRepository;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Optional;
 
 public class ProductCRUD {
 
@@ -23,12 +27,21 @@ public class ProductCRUD {
         return productRepository.findAll(pageable);
     }
 
-    public PublicId deleteById(PublicId productId) {
+    public UserPublicId deleteById(UserPublicId productId) {
         int numOfDeletedRows = productRepository.delete(productId);
         if(numOfDeletedRows != 1) {
-            //TODO THROW EXCEPTION
+            throw new EntityNotFoundException(
+                    String.format("The product with id %s was not found", productId)
+            );
         }
         return productId;
     }
 
+    public Optional<Product> findByPublicId(UserPublicId productId) {
+        return productRepository.findByPublicId(productId);
+    }
+
+    public List<Product> findAllByPublicIdIn(List<UserPublicId> publicIds) {
+        return productRepository.findByPublicIds(publicIds);
+    }
 }

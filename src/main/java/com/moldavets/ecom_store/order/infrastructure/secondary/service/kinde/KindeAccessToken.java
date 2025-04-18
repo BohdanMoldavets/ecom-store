@@ -1,4 +1,4 @@
-package com.moldavets.ecom_store.order.infrastructure.secondary.service;
+package com.moldavets.ecom_store.order.infrastructure.secondary.service.kinde;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

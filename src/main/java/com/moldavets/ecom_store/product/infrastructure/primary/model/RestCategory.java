@@ -2,7 +2,7 @@ package com.moldavets.ecom_store.product.infrastructure.primary.model;
 
 import com.moldavets.ecom_store.product.model.Category;
 import com.moldavets.ecom_store.product.vo.CategoryName;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import lombok.Builder;
 
 import java.util.UUID;
@@ -26,7 +26,7 @@ public record RestCategory(UUID publicId,
         }
 
         if(category.publicId != null) {
-            builder.publicId(new PublicId(category.publicId));
+            builder.publicId(new UserPublicId(category.publicId));
         }
 
         return builder.build();

@@ -1,7 +1,7 @@
 package com.moldavets.ecom_store.product.model;
 
 import com.moldavets.ecom_store.product.vo.CategoryName;
-import com.moldavets.ecom_store.product.vo.PublicId;
+import com.moldavets.ecom_store.product.vo.UserPublicId;
 import lombok.Builder;
 
 import java.util.UUID;
@@ -12,9 +12,9 @@ public class Category {
 
     private Long dbId;
 
-    private PublicId publicId;
+    private UserPublicId publicId;
 
-    public Category(CategoryName categoryName, Long dbId, PublicId publicId) {
+    public Category(CategoryName categoryName, Long dbId, UserPublicId publicId) {
         assertRequiredFields(categoryName);
         this.categoryName = categoryName;
         this.dbId = dbId;
@@ -22,7 +22,7 @@ public class Category {
     }
 
     public void initDefaultFields() {
-        this.publicId = new PublicId(UUID.randomUUID());
+        this.publicId = new UserPublicId(UUID.randomUUID());
     }
 
     private void assertRequiredFields(CategoryName categoryName) {
@@ -39,7 +39,7 @@ public class Category {
         return dbId;
     }
 
-    public PublicId getPublicId() {
+    public UserPublicId getPublicId() {
         return publicId;
     }
 
@@ -47,7 +47,7 @@ public class Category {
         this.dbId = dbId;
     }
 
-    public void setPublicId(PublicId publicId) {
+    public void setPublicId(UserPublicId publicId) {
         this.publicId = publicId;
     }
 }

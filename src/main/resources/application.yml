@@ -1,3 +1,6 @@
+
+
+
 spring:
   application:
     name: ecom-store
@@ -58,6 +61,7 @@ spring:
 server:
   port: 8080
 application:
+  client-base-url: http://localhost:4200
   cors:
     allowed-origins: http://localhost:8080
     allowed-methods: "*"
@@ -71,3 +75,14 @@ application:
     client-id: ${KINDE_CLIENT_ID}
     client-secret: ${KINDE_CLIENT_SECRET}
     audience: https://moldavets.kinde.com/api
+
+  stripe:
+    api-key: ${STRIPE_API_KEY}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET}
+
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
